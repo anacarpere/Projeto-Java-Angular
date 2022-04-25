@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import SoulCode.Services.Models.Funcionario;
 import SoulCode.Services.Repositories.FuncionarioRepository;
-import net.bytebuddy.asm.Advice.Return;
+
 
 @Service
 public class FuncionarioService {
@@ -66,9 +66,6 @@ public class FuncionarioService {
 		funcionarioRepository.deleteById(idFuncionario);
 	}
 	
-	
-	
-	
-	
+
 	
 }
