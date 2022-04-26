@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import SoulCode.Services.Models.Orcamento;
 import SoulCode.Services.Models.Servico;
 import SoulCode.Services.Models.StatusOrcamento;
+import SoulCode.Services.Models.StatusServico;
 import SoulCode.Services.Repositories.OrcamentoRepository;
 import SoulCode.Services.Repositories.ServicoRepository;
 
@@ -40,10 +41,57 @@ public class OrcamentoService {
 		orcamento.setStatus(StatusOrcamento.EMITIDO);
 		orcamentoRepository.save(orcamento);
 		Servico servico = servicoRepository.getById(idServico);
+		servico.setStatus(StatusServico.RECEBIDO);
 		servico.setOrcamento(orcamento);
 		servicoRepository.save(servico);
 		return orcamento;
 				
 	}
+	
+	//servico para pagamento de um orçamento (liquidar um orçamento
+	//modificar o status para quitado
+	
+	public Orcamento quitarOrcamento(Integer idOrcamento) {
+		Orcamento orcamento = mostrarUmOrcamento(idOrcamento);
+		orcamento.setStatus(StatusOrcamento.QUITADO);
+		return orcamentoRepository.save(orcamento);
+		
+	}
+	
+	//deletar orçamento
+
+
+	public void excluirOrcamento(Integer idOrcamento) {
+		Servico servico = servicoRepository.getById(idOrcamento);
+		servico.setOrcamento(null);
+		servico.setStatus(StatusServico.ARQUIVADO);
+		servicoRepository.save(servico);
+		orcamentoRepository.deleteById(idOrcamento);
+		
+	}
+	
+	public Orcamento editarOrcamento(Orcamento orcamento, Integer idOrcamento) {
+		mostrarUmOrcamento(orcamento.getIdOrcamento());
+		return orcamentoRepository.save(orcamento);
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

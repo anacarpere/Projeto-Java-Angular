@@ -4,7 +4,8 @@ public enum StatusServico {
 	
 	RECEBIDO("recebido"),
 	ATRIBUIDO("Atribuido"),
-	CONCLUIDO("Concluido");
+	CONCLUIDO("Concluido"),
+	ARQUIVADO("Arquivado");
 	
 	
 	private String descricao;
