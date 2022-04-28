@@ -48,6 +48,11 @@ public class Servico {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "idOrcamento", unique = true)
 	private Orcamento orcamento;
+	
+	//relacionamento com a tabela cliente
+	@ManyToOne
+	@JoinColumn(name = "idCliente")
+	private Cliente cliente;
 
 	public Integer getIdServico() {
 		return idServico;

@@ -23,10 +23,10 @@ public class UploadFileController {
 	FuncionarioService funcionarioService;
 	
 	@PostMapping("/funcionario/envioFoto/{idFuncionario}")
-	public ResponseEntity<String> enviarDados(@PathVariable Integer idFuncionario,
+	public ResponseEntity<Void> enviarDados(@PathVariable Integer idFuncionario,
 			MultipartFile foto, @RequestParam("nome") String nome){
 		String fileName = nome;
-		String uploadDir = "C://Users//felip//OneDrive//Área de Trabalho//projeto Java//frontend//src//assets//imagens";
+		String uploadDir = "C://Users//felip//git//Projeto-Java-Angular//frontend//src//assets//imagens";
 		String nomeMaisCaminho = "assets/imagens/" + nome;
 		
 		funcionarioService.salvarFoto(idFuncionario, nomeMaisCaminho);
@@ -37,7 +37,7 @@ public class UploadFileController {
 			System.out.println("O arquivo não foi enviado: " + e );
 		}
 		System.out.println("Arquivo enviado: " + nomeMaisCaminho);
-		return ResponseEntity.ok("Arquivo enviado");
+		return ResponseEntity.ok().build();
 	
 		
 	}
