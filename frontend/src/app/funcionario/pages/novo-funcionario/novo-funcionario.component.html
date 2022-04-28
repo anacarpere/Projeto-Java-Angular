@@ -29,7 +29,7 @@
             id="file-input"
             #fileInput
             formControlName="foto"
-            accept="image/*">
+            accept="image/*" (change)="fileChange($event)">
 
             <button mat-raised-button
             color="accent"

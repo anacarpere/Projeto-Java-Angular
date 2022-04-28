@@ -20,6 +20,8 @@ export class NovoFuncionarioComponent implements OnInit {
     email: ['',[Validators.required, Validators.email]],
     foto:['']
   })
+  
+  foto!: File
 
   constructor(
     private fb: FormBuilder,
@@ -37,27 +39,59 @@ export class NovoFuncionarioComponent implements OnInit {
 
   submit(): void {
     const funcionario = this.funcionario.value
+    funcionario.foto = null
     
     this.funHttpService.createFuncionario(funcionario).subscribe(
-      () =>{
-        this.snackbar.open('Funcionario salvo', 'ok', {
-        duration: 3000,
-        horizontalPosition: 'left',
-        verticalPosition: 'top'
+      (fun) =>{
+        if (this.foto != undefined) {
+          const formData: FormData = new FormData()
 
-        })
-        this.router.navigateByUrl('/funcionario')
-
+          formData.append('foto', new Blob([this.foto], {type: this.foto.type}))
+          const filename = `funcionario-${fun.idFuncionario}.${this.foto.type.split('/')[1]}`
+          this.funHttpService.addFoto(fun.idFuncionario || 0, formData, filename)
+          .subscribe(
+            () =>{
+              this.showSuccesMessageAndRedirect()
+            },
+            (e:HttpErrorResponse) =>{
+              this.showErrorMessage(e)
+            }
+          )
+        }else {
+          this.showSuccesMessageAndRedirect()
+        }
       },
-      (error: HttpErrorResponse) => {
-        this.snackbar.open(`Ocorreu um erro no salvamento! (Erro ${error.status})`, 'ok', {
+      (e: HttpErrorResponse) => {
+        this.showErrorMessage(e)
+      }
+    ) 
+  }
+
+  fileChange(event: any) {
+    this.foto = event.target.files[0]
+
+    console.log(this.foto)
+
+  }
+
+  showSuccesMessageAndRedirect(): void {
+    this.snackbar.open('Funcionario salvo', 'ok', {
+      duration: 3000,
+      horizontalPosition: 'left',
+      verticalPosition: 'top'
+
+      })
+      this.router.navigateByUrl('/funcionario')
+    }
+
+    showErrorMessage(e: HttpErrorResponse): void {
+      this.snackbar.open(`Ocorreu um erro no salvamento! (Erro ${e.status})`, 'ok', {
         duration: 3000,
         horizontalPosition: 'left',
         verticalPosition: 'top'
       })
-      }
-    ) 
+    
 
-  }
+    }
 
 }
