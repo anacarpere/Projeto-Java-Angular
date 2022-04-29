@@ -6,7 +6,7 @@ import { Funcionario } from '../models/funcionario';
 @Injectable()
 export class FuncionarioHttpService {
 
-  private readonly BaseURL = 'http://localhost:8080/servicos/funcionario'
+  private readonly BaseURL = '/servicos/funcionario'
 
   constructor(
     private http: HttpClient
