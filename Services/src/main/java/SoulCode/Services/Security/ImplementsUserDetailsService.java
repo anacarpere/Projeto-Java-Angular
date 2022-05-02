@@ -14,7 +14,7 @@ import SoulCode.Services.Repositories.UsuarioRepository;
 
 @Repository
 @Transactional
-public class ImplementsDetailsService implements UserDetailsService {
+public class ImplementsUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	UsuarioRepository usuarioRepository;
